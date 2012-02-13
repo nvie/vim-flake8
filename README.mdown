@@ -1,5 +1,13 @@
-vim-flake8 ![Project status](http://stillmaintained.com/nvie/vim-flake8.png)
+vim-flake8
 ==========
+`vim-flake8` is a Vim plugin that runs the currently open file through Flake8,
+a static syntax and style checker for Python source code.  It supersedes both
+[vim-pyflakes](https://github.com/nvie/vim-pyflakes) and
+[vim-pep8](https://github.com/nvie/vim-pep8).
+
+Flake8 is a wrapper around PyFlakes (static syntax checker), PEP8 (style
+checker) and Ned's MacCabe script (complexity checker).
+
 
 Installation
 ------------
