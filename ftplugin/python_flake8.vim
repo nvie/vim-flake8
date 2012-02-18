@@ -13,6 +13,11 @@ let b:loaded_flake8_ftplugin=1
 
 let s:flake8_cmd="flake8"
 
+let s:flake8_ignores=""
+if exists("g:flake8_ignore")
+    let s:flake8_ignores=" --ignore=".g:flake8_ignore
+endif
+
 if !exists("*Flake8()")
     function Flake8()
         if !executable(s:flake8_cmd)
@@ -34,7 +39,7 @@ if !exists("*Flake8()")
 
         " perform the grep itself
         let &grepformat="%f:%l:%c: %m\,%f:%l: %m"
-        let &grepprg=s:flake8_cmd
+        let &grepprg=s:flake8_cmd.s:flake8_ignores
         silent! grep! %
 
         " restore grep settings
