@@ -41,6 +41,9 @@ enable this, add the following line to your `.vimrc` file (thanks
 
     autocmd BufWritePost *.py call Flake8()
 
+To ignore errors, in your .vimrc:
+
+    g:flake8_ignore=E501,W293
 
 This plugin goes well together with the following plugin:
 
