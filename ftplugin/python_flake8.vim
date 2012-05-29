@@ -74,6 +74,5 @@ endif
 if !exists("no_plugin_maps") && !exists("no_flake8_maps")
     if !hasmapto('Flake8(')
         noremap <buffer> <F7> :call Flake8()<CR>
-        noremap! <buffer> <F7> :call Flake8()<CR>
     endif
 endif
