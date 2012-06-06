@@ -1,7 +1,7 @@
 "
 " Python filetype plugin for running flake8
 " Language:     Python (ft=python)
-" Maintainer:   Vincent Driessen <vincent@datafox.nl>
+" Maintainer:   Vincent Driessen <vincent@3rdcloud.com>
 " Version:      Vim 7 (may work with lower Vim versions, but not tested)
 " URL:          http://github.com/nvie/vim-flake8
 "
