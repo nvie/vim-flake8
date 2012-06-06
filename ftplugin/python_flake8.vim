@@ -11,9 +11,10 @@ if exists("b:loaded_flake8_ftplugin")
 endif
 let b:loaded_flake8_ftplugin=1
 
-let s:flake8_cmd="flake8"
 if exists("g:flake8_cmd")
     let s:flake8_cmd=g:flake8_cmd
+else
+    let s:flake8_cmd="flake8"
 endif
 
 let s:flake8_ignores=""
