@@ -45,6 +45,10 @@ To ignore errors, in your .vimrc:
 
     let g:flake8_ignore="E501,W293"
 
+If you want to cutomize the location of your flake8 binary, set `g:flake8_cmd`:
+
+    let g:flake8_cmd="/opt/strangebin/flake8000"
+
 This plugin goes well together with the following plugin:
 
 - [PyUnit](http://github.com/nvie/vim-pyunit) (unit test helper under `<F8>`
