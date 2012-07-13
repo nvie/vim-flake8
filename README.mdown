@@ -32,6 +32,18 @@ the `<F7>` key if so.  For example, to remap it to `<F3>` instead, use:
 
     autocmd FileType python map <buffer> <F3> :call Flake8()<CR>
 
+To ignore errors, in your .vimrc:
+
+    let g:flake8_ignore="E501,W293"
+
+If you want to change the max line length for PEP8:
+
+    let g:flake8_max_line_length=99
+
+To cutomize the location of your flake8 binary, set `g:flake8_cmd`:
+
+    let g:flake8_cmd="/opt/strangebin/flake8000"
+
 
 Tips
 ----
@@ -40,14 +52,6 @@ enable this, add the following line to your `.vimrc` file (thanks
 [Godefroid](http://github.com/gotcha)!):
 
     autocmd BufWritePost *.py call Flake8()
-
-To ignore errors, in your .vimrc:
-
-    let g:flake8_ignore="E501,W293"
-
-If you want to cutomize the location of your flake8 binary, set `g:flake8_cmd`:
-
-    let g:flake8_cmd="/opt/strangebin/flake8000"
 
 This plugin goes well together with the following plugin:
 
