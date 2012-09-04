@@ -40,6 +40,10 @@ If you want to change the max line length for PEP8:
 
     let g:flake8_max_line_length=99
 
+To set the maximum [McCabe complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) before a warning is issued:
+
+    let g:flake8_max_complexity=10
+
 To cutomize the location of your flake8 binary, set `g:flake8_cmd`:
 
     let g:flake8_cmd="/opt/strangebin/flake8000"
