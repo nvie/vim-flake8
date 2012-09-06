@@ -27,6 +27,11 @@ if exists("g:flake8_max_line_length")
     let s:flake8_max_line_length=" --max-line-length=".g:flake8_max_line_length
 endif
 
+let s:flake8_max_complexity=""
+if exists("g:flake8_max_complexity")
+    let s:flake8_max_complexity=" --max-complexity=".g:flake8_max_complexity
+endif
+
 if !exists("*Flake8()")
     function Flake8()
         if !executable(s:flake8_cmd)
@@ -48,7 +53,7 @@ if !exists("*Flake8()")
 
         " perform the grep itself
         let &grepformat="%f:%l:%c: %m\,%f:%l: %m"
-        let &grepprg=s:flake8_cmd.s:flake8_ignores.s:flake8_max_line_length
+        let &grepprg=s:flake8_cmd.s:flake8_ignores.s:flake8_max_line_length.s:flake8_max_complexity
         silent! grep! %
 
         " restore grep settings
