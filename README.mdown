@@ -5,14 +5,16 @@ a static syntax and style checker for Python source code.  It supersedes both
 [vim-pyflakes](https://github.com/nvie/vim-pyflakes) and
 [vim-pep8](https://github.com/nvie/vim-pep8).
 
-Flake8 is a wrapper around PyFlakes (static syntax checker), PEP8 (style
-checker) and Ned's MacCabe script (complexity checker).
+[Flake8](http://pypi.python.org/pypi/flake8/) is a wrapper around PyFlakes 
+(static syntax checker), PEP8 (style checker) 
+and Ned's MacCabe script (complexity checker).
 
 
 Installation
 ------------
 Use [vim-pathogen](https://github.com/tpope/vim-pathogen) if you're not using
-it already.  Then, simply put the contents of this repository in your
+it already.  Make sure you've installed the [flake8](http://pypi.python.org/pypi/flake8/) package.
+Then, simply put the contents of this repository in your
 `~/.vim/bundle` directory.
 
 Usage
