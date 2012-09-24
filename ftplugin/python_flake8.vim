@@ -11,29 +11,14 @@ if exists("b:loaded_flake8_ftplugin")
 endif
 let b:loaded_flake8_ftplugin=1
 
-if exists("g:flake8_cmd")
-    let s:flake8_cmd=g:flake8_cmd
-else
-    let s:flake8_cmd="flake8"
-endif
-
-let s:flake8_ignores=""
-if exists("g:flake8_ignore")
-    let s:flake8_ignores=" --ignore=".g:flake8_ignore
-endif
-
-let s:flake8_max_line_length=""
-if exists("g:flake8_max_line_length")
-    let s:flake8_max_line_length=" --max-line-length=".g:flake8_max_line_length
-endif
-
-let s:flake8_max_complexity=""
-if exists("g:flake8_max_complexity")
-    let s:flake8_max_complexity=" --max-complexity=".g:flake8_max_complexity
-endif
-
 if !exists("*Flake8()")
     function Flake8()
+        if exists("g:flake8_cmd")
+            let s:flake8_cmd=g:flake8_cmd
+        else
+            let s:flake8_cmd="flake8"
+        endif
+
         if !executable(s:flake8_cmd)
             echoerr "File " . s:flake8_cmd . " not found. Please install it first."
             return
@@ -49,6 +34,25 @@ if !exists("*Flake8()")
         " write any changes before continuing
         if &readonly == 0
             update
+        endif
+
+        " read config
+        if exists("g:flake8_ignore")
+            let s:flake8_ignores=" --ignore=".g:flake8_ignore
+        else
+            let s:flake8_ignores=""
+        endif
+
+        if exists("g:flake8_max_line_length")
+            let s:flake8_max_line_length=" --max-line-length=".g:flake8_max_line_length
+        else
+            let s:flake8_max_line_length=""
+        endif
+
+        if exists("g:flake8_max_complexity")
+            let s:flake8_max_complexity=" --max-complexity=".g:flake8_max_complexity
+        else
+            let s:flake8_max_complexity=""
         endif
 
         " perform the grep itself
