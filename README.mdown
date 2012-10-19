@@ -34,6 +34,10 @@ the `<F7>` key if so.  For example, to remap it to `<F3>` instead, use:
 
     autocmd FileType python map <buffer> <F3> :call Flake8()<CR>
 
+To add builtins, in your .vimrc:
+
+    let g:flake8_builtins="_,apply"
+
 To ignore errors, in your .vimrc:
 
     let g:flake8_ignore="E501,W293"
