@@ -67,3 +67,22 @@ This plugin goes well together with the following plugin:
 
 - [PyUnit](http://github.com/nvie/vim-pyunit) (unit test helper under `<F8>`
   and `<F9>`)
+
+
+History
+-------
+
+1.3: Added the following options:
+
+     - `g:flake8_builtins="_,apply"`
+     - `g:flake8_max_complexity=10`
+
+1.2: Added the following options:
+
+     - `g:flake8_cmd="/opt/strangebin/flake8000"`
+     - `g:flake8_max_line_length=120`
+     - `g:flake8_ignore="E501,W293"`
+
+1.1: Added `g:flake8_ignore` option.
+
+1.0: Initial version.
