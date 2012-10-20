@@ -50,7 +50,7 @@ To set the maximum [McCabe complexity](https://en.wikipedia.org/wiki/Cyclomatic_
 
     let g:flake8_max_complexity=10
 
-To cutomize the location of your flake8 binary, set `g:flake8_cmd`:
+To customize the location of your flake8 binary, set `g:flake8_cmd`:
 
     let g:flake8_cmd="/opt/strangebin/flake8000"
 
