@@ -64,7 +64,7 @@ if !exists("*Flake8()")
         " perform the grep itself
         let &grepformat="%f:%l:%c: %m\,%f:%l: %m"
         let &grepprg=s:flake8_cmd.s:flake8_builtins_opt.s:flake8_ignores.s:flake8_max_line_length.s:flake8_max_complexity
-        silent! grep! %
+        silent! grep! "%"
 
         " restore grep settings
         let &grepformat=l:old_gfm
