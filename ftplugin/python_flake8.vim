@@ -61,6 +61,12 @@ if !exists("*Flake8()")
             let s:flake8_max_complexity=""
         endif
 
+        if exists("g:flake8_quickfix_location")
+            let s:flake8_quickfix_location=g:flake8_quickfix_location
+        else
+            let s:flake8_quickfix_location="belowright"
+        endif
+
         " perform the grep itself
         let &grepformat="%f:%l:%c: %m\,%f:%l: %m"
         let &grepprg=s:flake8_cmd.s:flake8_builtins_opt.s:flake8_ignores.s:flake8_max_line_length.s:flake8_max_complexity
@@ -73,7 +79,7 @@ if !exists("*Flake8()")
         " open cwindow
         let has_results=getqflist() != []
         if has_results
-            execute 'belowright copen'
+            execute s:flake8_quickfix_location." copen"
             setlocal wrap
             nnoremap <buffer> <silent> c :cclose<CR>
             nnoremap <buffer> <silent> q :cclose<CR>

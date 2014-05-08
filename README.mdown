@@ -54,6 +54,9 @@ To customize the location of your flake8 binary, set `g:flake8_cmd`:
 
     let g:flake8_cmd="/opt/strangebin/flake8000"
 
+To customize the location of quick fix window, set `g:flake8_quickfix_location`:
+
+    let g:flake8_quickfix_location="topleft"
 
 Tips
 ----
