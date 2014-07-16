@@ -30,6 +30,7 @@ if !exists("*Flake8()")
         " store old grep settings (to restore later)
         let l:old_gfm=&grepformat
         let l:old_gp=&grepprg
+        let l:old_shellpipe=&shellpipe
 
         " write any changes before continuing
         if &readonly == 0
@@ -67,6 +68,9 @@ if !exists("*Flake8()")
             let s:flake8_quickfix_location="belowright"
         endif
 
+        " set shellpipe to > instead of tee (suppressing output)
+        set shellpipe=>
+
         " perform the grep itself
         let &grepformat="%f:%l:%c: %m\,%f:%l: %m"
         let &grepprg=s:flake8_cmd.s:flake8_builtins_opt.s:flake8_ignores.s:flake8_max_line_length.s:flake8_max_complexity
@@ -75,6 +79,7 @@ if !exists("*Flake8()")
         " restore grep settings
         let &grepformat=l:old_gfm
         let &grepprg=l:old_gp
+        let &shellpipe=l:old_shellpipe
 
         " open cwindow
         let has_results=getqflist() != []
