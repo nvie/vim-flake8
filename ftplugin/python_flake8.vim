@@ -68,6 +68,12 @@ if !exists("*Flake8()")
             let s:flake8_quickfix_location="belowright"
         endif
 
+        if exists("g:flake8_hide_quickfix")
+            let s:flake8_hide_quickfix=g:flake8_hide_quickfix
+        else
+            let s:flake8_hide_quickfix=0
+        endif
+
         " set shellpipe to > instead of tee (suppressing output)
         set shellpipe=>
 
@@ -84,10 +90,12 @@ if !exists("*Flake8()")
         " open cwindow
         let has_results=getqflist() != []
         if has_results
-            execute s:flake8_quickfix_location." copen"
-            setlocal wrap
-            nnoremap <buffer> <silent> c :cclose<CR>
-            nnoremap <buffer> <silent> q :cclose<CR>
+            if s:flake8_hide_quickfix == 0
+                execute s:flake8_quickfix_location." copen"
+                setlocal wrap
+                nnoremap <buffer> <silent> c :cclose<CR>
+                nnoremap <buffer> <silent> q :cclose<CR>
+            endif
         endif
 
         set nolazyredraw
