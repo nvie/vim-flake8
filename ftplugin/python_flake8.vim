@@ -11,111 +11,45 @@ if exists("b:loaded_flake8_ftplugin")
 endif
 let b:loaded_flake8_ftplugin=1
 
-if !exists("*Flake8()")
-    function Flake8()
-        if exists("g:flake8_cmd")
-            let s:flake8_cmd=g:flake8_cmd
-        else
-            let s:flake8_cmd="flake8"
-        endif
+let s:save_cpo = &cpo
+set cpo&vim
 
-        if !executable(s:flake8_cmd)
-            echoerr "File " . s:flake8_cmd . " not found. Please install it first."
-            return
-        endif
+"" Highlight groups for errors
+" pep8 errors
+highlight Flake8_Error
+            \ ctermbg=DarkRed ctermfg=Red cterm=bold
+            \ guibg=DarkRed   guifg=Red   gui=bold
+" pep8 warnings
+highlight Flake8_Warning
+            \ ctermbg=Yellow ctermfg=DarkYellow cterm=bold
+            \ guibg=Yellow   guifg=DarkYellow   gui=bold
+" PyFlakes codes
+highlight Flake8_PyFlake
+            \ ctermbg=DarkBlue ctermfg=Blue cterm=bold
+            \ guibg=DarkBlue   guifg=Blue   gui=bold
+" McCabe complexity warnings
+highlight Flake8_Complexity
+            \ ctermbg=DarkBlue ctermfg=Blue cterm=bold
+            \ guibg=DarkBlue   guifg=Blue   gui=bold
+" naming conventions
+highlight Flake8_Naming
+            \ ctermbg=DarkBlue ctermfg=Blue cterm=bold
+            \ guibg=DarkBlue   guifg=Blue   gui=bold
 
-        set lazyredraw   " delay redrawing
-        cclose           " close any existing cwindows
-
-        " store old grep settings (to restore later)
-        let l:old_gfm=&grepformat
-        let l:old_gp=&grepprg
-        let l:old_shellpipe=&shellpipe
-
-        " write any changes before continuing
-        if &readonly == 0
-            update
-        endif
-
-        " read config
-        if exists("g:flake8_builtins")
-            let s:flake8_builtins_opt=" --builtins=".g:flake8_builtins
-        else
-            let s:flake8_builtins_opt=""
-        endif
-
-        if exists("g:flake8_ignore")
-            let s:flake8_ignores=" --ignore=".g:flake8_ignore
-        else
-            let s:flake8_ignores=""
-        endif
-
-        if exists("g:flake8_max_line_length")
-            let s:flake8_max_line_length=" --max-line-length=".g:flake8_max_line_length
-        else
-            let s:flake8_max_line_length=""
-        endif
-
-        if exists("g:flake8_max_complexity")
-            let s:flake8_max_complexity=" --max-complexity=".g:flake8_max_complexity
-        else
-            let s:flake8_max_complexity=""
-        endif
-
-        if exists("g:flake8_quickfix_location")
-            let s:flake8_quickfix_location=g:flake8_quickfix_location
-        else
-            let s:flake8_quickfix_location="belowright"
-        endif
-
-        if exists("g:flake8_hide_quickfix")
-            let s:flake8_hide_quickfix=g:flake8_hide_quickfix
-        else
-            let s:flake8_hide_quickfix=0
-        endif
-
-        " set shellpipe to > instead of tee (suppressing output)
-        set shellpipe=>
-
-        " perform the grep itself
-        let &grepformat="%f:%l:%c: %m\,%f:%l: %m"
-        let &grepprg=s:flake8_cmd.s:flake8_builtins_opt.s:flake8_ignores.s:flake8_max_line_length.s:flake8_max_complexity
-        silent! grep! "%"
-
-        " restore grep settings
-        let &grepformat=l:old_gfm
-        let &grepprg=l:old_gp
-        let &shellpipe=l:old_shellpipe
-
-        " open cwindow
-        let has_results=getqflist() != []
-        if has_results
-            if s:flake8_hide_quickfix == 0
-                execute s:flake8_quickfix_location." copen"
-                setlocal wrap
-                nnoremap <buffer> <silent> c :cclose<CR>
-                nnoremap <buffer> <silent> q :cclose<CR>
-            endif
-        endif
-
-        set nolazyredraw
-        redraw!
-
-        if has_results == 0
-            " Show OK status
-            hi Green ctermfg=green
-            echohl Green
-            echon "Flake8 check OK"
-            echohl
-        endif
-    endfunction
-endif
+" to not break with old versions
+function! Flake8()
+    call flake8#Flake8()
+endfunction
 
 " Add mappings, unless the user didn't want this.
 " The default mapping is registered under to <F7> by default, unless the user
 " remapped it already (or a mapping exists already for <F7>)
 if !exists("no_plugin_maps") && !exists("no_flake8_maps")
     if !hasmapto('Flake8(')
-        noremap <buffer> <F7> :call Flake8()<CR>
+        noremap <buffer> <F7> :call flake8#Flake8()<CR>
     endif
 endif
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
