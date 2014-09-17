@@ -16,23 +16,23 @@ set cpo&vim
 
 "" Highlight groups for errors
 " pep8 errors
-highlight Flake8_Error
+highlight default Flake8_Error
             \ ctermbg=DarkRed ctermfg=Red cterm=bold
             \ guibg=DarkRed   guifg=Red   gui=bold
 " pep8 warnings
-highlight Flake8_Warning
+highlight default Flake8_Warning
             \ ctermbg=Yellow ctermfg=DarkYellow cterm=bold
             \ guibg=Yellow   guifg=DarkYellow   gui=bold
 " PyFlakes codes
-highlight Flake8_PyFlake
+highlight default Flake8_PyFlake
             \ ctermbg=DarkBlue ctermfg=Blue cterm=bold
             \ guibg=DarkBlue   guifg=Blue   gui=bold
 " McCabe complexity warnings
-highlight Flake8_Complexity
+highlight default Flake8_Complexity
             \ ctermbg=DarkBlue ctermfg=Blue cterm=bold
             \ guibg=DarkBlue   guifg=Blue   gui=bold
 " naming conventions
-highlight Flake8_Naming
+highlight default Flake8_Naming
             \ ctermbg=DarkBlue ctermfg=Blue cterm=bold
             \ guibg=DarkBlue   guifg=Blue   gui=bold
 

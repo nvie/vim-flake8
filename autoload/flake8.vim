@@ -8,7 +8,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-"" external {{{
+"" ** external ** {{{
 
 function! flake8#Flake8()
     call s:Flake8()
@@ -181,24 +181,29 @@ function! s:PlaceMarkers(results)  " {{{
     let s:signids  = []
 
     " place
-    let index = 100
+    let l:index0 = 100
+    let l:index  = l:index0
     for result in a:results
-        let type = strpart(result.text, 0, 1)
-        if has_key(s:markerdata, type)
+        if l:index >= (s:flake8_max_markers+l:index0)
+            break
+        endif
+        let l:type = strpart(result.text, 0, 1)
+        if has_key(s:markerdata, l:type)
             " file markers
             if !s:flake8_show_in_file == 0
-                let s:matchids += [matchadd(s:markerdata[type]['color'],
+                let s:matchids += [matchadd(s:markerdata[l:type]['color'],
                             \ "\\%".result.lnum."l\\%".result.col."c")]
             endif
             " gutter markers
             if !s:flake8_show_in_gutter == 0
-                execute ":sign place ".index." name=".s:markerdata[type]['sign']
+                execute ":sign place ".index." name=".s:markerdata[l:type]['sign']
                             \ . " line=".result.lnum." file=".expand("%:p")
-                let s:signids += [index]
-                let index += 1
+                let s:signids += [l:index]
             endif
+            let l:index += 1
         endif
     endfor
+    redraw
 endfunction  " }}}
 
 function! s:UnplaceMarkers()  " {{{
