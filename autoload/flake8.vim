@@ -203,7 +203,6 @@ function! s:PlaceMarkers(results)  " {{{
             let l:index += 1
         endif
     endfor
-    redraw
 endfunction  " }}}
 
 function! s:UnplaceMarkers()  " {{{

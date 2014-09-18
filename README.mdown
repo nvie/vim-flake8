@@ -119,7 +119,7 @@ This plugin goes well together with the following plugin:
 History
 -------
 
-1.4: Added markers and the option to don't show the quickfix window, also split functions into
+1.5: Added markers and the option to don't show the quickfix window, also split functions into
 a autoload file. Added:
 
     - Options:
@@ -141,6 +141,8 @@ a autoload file. Added:
       - `Flake8_Complexity`
       - `Flake8_Naming`
       - `Flake8_PyFlake`
+
+1.4: Suppress output to stdout.
 
 1.3: Added the following options:
 
