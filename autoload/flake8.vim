@@ -26,9 +26,18 @@ endfunction
 
 function! s:DeclareOption(name, globalPrefix, default)  " {{{
     if !exists('g:'.a:name)
-        execute 'let s:'.a:name.'='.a:default
+        if a:default != ''
+            execute 'let s:'.a:name.'='.a:default
+        else
+            execute 'let s:'.a:name.'=""'
+        endif
     else
-        execute 'let s:'.a:name.'="'.a:globalPrefix.'".g:'.a:name
+        execute 'let l:global="g:".a:name'
+        if l:global != ''
+            execute 'let s:'.a:name.'="'.a:globalPrefix.'".g:'.a:name
+        else
+            execute 'let s:'.a:name.'=""'
+        endif
     endif
 endfunction  " }}}
 
@@ -175,6 +184,12 @@ function! s:PlaceMarkers(results)  " {{{
         endfor
     endif
 
+    " in file?
+    let l:matchstr = ""
+    if !s:flake8_show_in_file == 0
+        let l:matchstr = '\%('
+    endif
+
     " clear old
     call s:UnplaceMarkers()
     let s:matchids = []
@@ -191,8 +206,8 @@ function! s:PlaceMarkers(results)  " {{{
         if has_key(s:markerdata, l:type)
             " file markers
             if !s:flake8_show_in_file == 0
-                let s:matchids += [matchadd(s:markerdata[l:type]['color'],
-                            \ "\\%".result.lnum."l\\%".result.col."c")]
+                "let s:matchstr .= '\|\%'.result.lnum.'l\%'.result.col.'c'
+                let s:matchids += [matchadd(s:markerdata[l:type]['color'], "\\%".result.lnum."l\\%".result.col."c")]
             endif
             " gutter markers
             if !s:flake8_show_in_gutter == 0
@@ -203,6 +218,11 @@ function! s:PlaceMarkers(results)  " {{{
             let l:index += 1
         endif
     endfor
+
+    " in file?
+    if !s:flake8_show_in_file == 0
+        call matchadd(Error, s:matchstr.'\)')
+    endif
 endfunction  " }}}
 
 function! s:UnplaceMarkers()  " {{{
