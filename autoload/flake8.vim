@@ -70,9 +70,9 @@ function! s:SetupConfig()  " {{{
     let s:markerdata = {}
     if s:flake8_error_marker != ''
     let s:markerdata['E'] = {
-                    \   'color':  'Flake8_Error',
-                    \   'marker': s:flake8_error_marker,
-                    \   'sign':   'Flake8_E',
+                    \   'color':    'Flake8_Error',
+                    \   'marker':   s:flake8_error_marker,
+                    \   'sign':     'Flake8_E',
                     \ }
     endif
     if s:flake8_warning_marker != ''
@@ -137,8 +137,6 @@ function! s:Flake8()  " {{{
     let &grepprg=s:flake8_cmd.s:flake8_builtins.s:flake8_ignore.s:flake8_max_line_length.s:flake8_max_complexity
     silent! grep! "%"
 
-    echo s:flake8_cmd.s:flake8_builtins.s:flake8_ignore.s:flake8_max_line_length.s:flake8_max_complexity
-
     " restore grep settings
     let &grepformat=l:old_gfm
     let &grepprg=l:old_gp
@@ -184,12 +182,6 @@ function! s:PlaceMarkers(results)  " {{{
         endfor
     endif
 
-    " in file?
-    let l:matchstr = ""
-    if !s:flake8_show_in_file == 0
-        let l:matchstr = '\%('
-    endif
-
     " clear old
     call s:UnplaceMarkers()
     let s:matchids = []
@@ -206,8 +198,12 @@ function! s:PlaceMarkers(results)  " {{{
         if has_key(s:markerdata, l:type)
             " file markers
             if !s:flake8_show_in_file == 0
-                "let s:matchstr .= '\|\%'.result.lnum.'l\%'.result.col.'c'
-                let s:matchids += [matchadd(s:markerdata[l:type]['color'], "\\%".result.lnum."l\\%".result.col."c")]
+                if !has_key(s:markerdata, 'matchstr')
+                    let s:markerdata[l:type]['matchstr'] = '\%('
+                else
+                    let s:markerdata[l:type]['matchstr'] .= '\|'
+                endif
+                let s:markerdata[l:type]['matchstr'] .= '\%'.result.lnum.'l\%'.result.col.'c'
             endif
             " gutter markers
             if !s:flake8_show_in_gutter == 0
@@ -221,7 +217,11 @@ function! s:PlaceMarkers(results)  " {{{
 
     " in file?
     if !s:flake8_show_in_file == 0
-        call matchadd(Error, s:matchstr.'\)')
+        for l:val in values(s:markerdata)
+            if l:val['matchstr'] != ''
+                let l:val['matchid'] = matchadd(l:val['color'], l:val['matchstr'].'\)')
+            endif
+        endfor
     endif
 endfunction  " }}}
 
@@ -234,12 +234,13 @@ function! s:UnplaceMarkers()  " {{{
         unlet s:signids
     endif
     " file markers
-    if exists('s:matchids')
-        for i in s:matchids
-            call matchdelete(i)
-        endfor
-        unlet s:matchids
-    endif
+    for l:val in values(s:markerdata)
+        if has_key(l:val, 'matchid')
+            call matchdelete(l:val['matchid'])
+            unlet l:val['matchid']
+            unlet l:val['matchstr']
+        endif
+    endfor
 endfunction  " }}}
 
 "" }}}
