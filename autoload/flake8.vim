@@ -41,7 +41,7 @@ function! s:DeclareOption(name, globalPrefix, default)  " {{{
     endif
 endfunction  " }}}
 
-function! s:SetupConfig()  " {{{
+function! s:Setup()  " {{{
     "" read options
 
     " flake8 command
@@ -67,49 +67,26 @@ function! s:SetupConfig()  " {{{
 
     "" setup markerdata
 
-    let s:markerdata = {}
-    if s:flake8_error_marker != ''
-    let s:markerdata['E'] = {
-                    \   'color':    'Flake8_Error',
-                    \   'marker':   s:flake8_error_marker,
-                    \   'sign':     'Flake8_E',
-                    \ }
+    if !exists('s:markerdata')
+        let s:markerdata = {}
+        let s:markerdata['E'] = { 'name': 'Flake8_Error'      }
+        let s:markerdata['W'] = { 'name': 'Flake8_Warning'    }
+        let s:markerdata['F'] = { 'name': 'Flake8_PyFlake'    }
+        let s:markerdata['C'] = { 'name': 'Flake8_Complexity' }
+        let s:markerdata['N'] = { 'name': 'Flake8_Nameing'    }
     endif
-    if s:flake8_warning_marker != ''
-        let s:markerdata['W'] = {
-                    \   'color':  'Flake8_Warning',
-                    \   'marker': s:flake8_warning_marker,
-                    \   'sign':   'Flake8_W',
-                    \ }
-    endif
-    if s:flake8_pyflake_marker != ''
-        let s:markerdata['F'] = {
-                    \   'color':  'Flake8_PyFlake',
-                    \   'marker': s:flake8_pyflake_marker,
-                    \   'sign':   'Flake8_F',
-                    \ }
-    endif
-    if s:flake8_complexity_marker != ''
-        let s:markerdata['C'] = {
-                    \   'color':  'Flake8_Complexity',
-                    \   'marker': s:flake8_complexity_marker,
-                    \   'sign':   'Flake8_C',
-                    \ }
-    endif
-    if s:flake8_naming_marker != ''
-        let s:markerdata['N'] = {
-                    \   'color':  'Flake8_Nameing',
-                    \   'marker': s:flake8_naming_marker,
-                    \   'sign':   'Flake8_N',
-                    \ }
-    endif
+    let s:markerdata['E'].marker = s:flake8_error_marker
+    let s:markerdata['W'].marker = s:flake8_warning_marker
+    let s:markerdata['F'].marker = s:flake8_pyflake_marker
+    let s:markerdata['C'].marker = s:flake8_complexity_marker
+    let s:markerdata['N'].marker = s:flake8_naming_marker
 endfunction  " }}}
 
 "" do flake8
 
 function! s:Flake8()  " {{{
     " read config
-    call s:SetupConfig()
+    call s:Setup()
 
     if !executable(s:flake8_cmd)
         echoerr "File " . s:flake8_cmd . " not found. Please install it first."
@@ -178,7 +155,9 @@ function! s:PlaceMarkers(results)  " {{{
     if !s:flake8_show_in_gutter == 0
         " define signs
         for val in values(s:markerdata)
-            execute "sign define ".val['sign']." text=".val['marker']." texthl=".val['color']
+            if val.marker != ''
+                execute "sign define ".val.name." text=".val.marker." texthl=".val.name
+            endif
         endfor
     endif
 
@@ -195,19 +174,19 @@ function! s:PlaceMarkers(results)  " {{{
             break
         endif
         let l:type = strpart(result.text, 0, 1)
-        if has_key(s:markerdata, l:type)
+        if has_key(s:markerdata, l:type) && s:markerdata[l:type].marker != ''
             " file markers
             if !s:flake8_show_in_file == 0
-                if !has_key(s:markerdata, 'matchstr')
-                    let s:markerdata[l:type]['matchstr'] = '\%('
+                if !has_key(s:markerdata[l:type], 'matchstr')
+                    let s:markerdata[l:type].matchstr = '\%('
                 else
-                    let s:markerdata[l:type]['matchstr'] .= '\|'
+                    let s:markerdata[l:type].matchstr .= '\|'
                 endif
-                let s:markerdata[l:type]['matchstr'] .= '\%'.result.lnum.'l\%'.result.col.'c'
+                let s:markerdata[l:type].matchstr .= '\%'.result.lnum.'l\%'.result.col.'c'
             endif
             " gutter markers
             if !s:flake8_show_in_gutter == 0
-                execute ":sign place ".index." name=".s:markerdata[l:type]['sign']
+                execute ":sign place ".index." name=".s:markerdata[l:type].name
                             \ . " line=".result.lnum." file=".expand("%:p")
                 let s:signids += [l:index]
             endif
@@ -218,8 +197,8 @@ function! s:PlaceMarkers(results)  " {{{
     " in file?
     if !s:flake8_show_in_file == 0
         for l:val in values(s:markerdata)
-            if l:val['matchstr'] != ''
-                let l:val['matchid'] = matchadd(l:val['color'], l:val['matchstr'].'\)')
+            if l:val.marker != '' && has_key(l:val, 'matchstr')
+                let l:val.matchid = matchadd(l:val.name, l:val.matchstr.'\)')
             endif
         endfor
     endif
@@ -236,9 +215,9 @@ function! s:UnplaceMarkers()  " {{{
     " file markers
     for l:val in values(s:markerdata)
         if has_key(l:val, 'matchid')
-            call matchdelete(l:val['matchid'])
-            unlet l:val['matchid']
-            unlet l:val['matchstr']
+            call matchdelete(l:val.matchid)
+            unlet l:val.matchid
+            unlet l:val.matchstr
         endif
     endfor
 endfunction  " }}}
