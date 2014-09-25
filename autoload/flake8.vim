@@ -93,6 +93,11 @@ function! s:Flake8()  " {{{
         return
     endif
 
+    " clear old
+    call s:UnplaceMarkers()
+    let s:matchids = []
+    let s:signids  = []
+
     " store old grep settings (to restore later)
     let l:old_gfm=&grepformat
     let l:old_gp=&grepprg
@@ -160,11 +165,6 @@ function! s:PlaceMarkers(results)  " {{{
             endif
         endfor
     endif
-
-    " clear old
-    call s:UnplaceMarkers()
-    let s:matchids = []
-    let s:signids  = []
 
     " place
     let l:index0 = 100
