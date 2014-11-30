@@ -158,3 +158,9 @@ a autoload file. Added:
 1.1: Added `g:flake8_ignore` option.
 
 1.0: Initial version.
+
+
+License
+-------
+
+Liberally licensed under BSD terms.
