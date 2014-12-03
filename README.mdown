@@ -92,7 +92,7 @@ the empty string disables it. Ex.:
     flake8_complexity_marker=''  " disable McCabe complexity warnings
     flake8_naming_marker=''      " disable naming warnings
 
-To customize the colors used for markers, define the highligth groups, `Flake8_Error`,
+To customize the colors used for markers, define the highlight groups, `Flake8_Error`,
 `Flake8_Warning`, `Flake8_PyFlake`, `Flake8_Complexity`, `Flake8_Naming`:
 
     " to use colors defined in the colorscheme
