@@ -49,6 +49,7 @@ function! s:Setup()  " {{{
     " flake8 stuff
     call s:DeclareOption('flake8_builtins',        ' --builtins=',        '')
     call s:DeclareOption('flake8_ignore',          ' --ignore=',          '')
+    call s:DeclareOption('flake8_exclude',         ' --exclude=',         '')
     call s:DeclareOption('flake8_max_line_length', ' --max-line-length=', '')
     call s:DeclareOption('flake8_max_complexity',  ' --max-complexity=',  '')
     " quickfix
@@ -116,7 +117,12 @@ function! s:Flake8()  " {{{
 
     " perform the grep itself
     let &grepformat="%f:%l:%c: %m\,%f:%l: %m"
-    let &grepprg=s:flake8_cmd.s:flake8_builtins.s:flake8_ignore.s:flake8_max_line_length.s:flake8_max_complexity
+    let &grepprg=s:flake8_cmd.
+          \ s:flake8_builtins. 
+          \ s:flake8_ignore. 
+          \ s:flake8_exclude. 
+          \ s:flake8_max_line_length. 
+          \ s:flake8_max_complexity
     silent! grep! "%"
 
     " restore grep settings
