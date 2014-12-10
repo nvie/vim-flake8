@@ -47,6 +47,10 @@ To ignore errors, in your .vimrc:
 
     let g:flake8_ignore="E501,W293"
 
+To exclude files and/or folders, in your .vimrc:
+
+    let g:flake8_exclude=".svn,CVS,.bzr,.hg,.git,__pycache"
+
 If you want to change the max line length for PEP8:
 
     let g:flake8_max_line_length=99
