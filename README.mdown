@@ -63,6 +63,10 @@ To customize the location of quick fix window, set `g:flake8_quickfix_location`:
 
     let g:flake8_quickfix_location="topleft"
 
+To customize the height of quick fix window, set `g:flake8_quickfix_height`:
+
+    let g:flake8_quickfix_height=7
+
 To customize whether the quickfix window opens, set `g:flake8_show_quickfix`:
 
     let g:flake8_show_quickfix=0  " don't show
