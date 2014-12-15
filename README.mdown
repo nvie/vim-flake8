@@ -106,9 +106,11 @@ This plugin goes well together with the following plugin:
 
 History
 -------
+1.6: Deprecated configuring flake8 options through Vim settings.  Instead,
+advise users to use the flake8 config file.
 
-1.5: Added markers and the option to don't show the quickfix window, also split functions into
-a autoload file. Added:
+1.5: Added markers and the option to don't show the quickfix window, also split
+functions into a autoload file. Added:
 
     - Options:
       - `g:flake8_show_quickfix`
