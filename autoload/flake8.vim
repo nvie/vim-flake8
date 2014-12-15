@@ -12,15 +12,40 @@ set cpo&vim
 
 function! flake8#Flake8()
     call s:Flake8()
+    call s:Warnings()
 endfunction
 
 function! flake8#Flake8UnplaceMarkers()
     call s:UnplaceMarkers()
+    call s:Warnings()
 endfunction
 
 "" }}}
 
 "" ** internal ** {{{
+
+"" warnings 
+
+let s:displayed_warnings = 0
+function s:Warnings()
+  if !s:displayed_warnings
+    let l:show_website_url = 0
+
+    let l:msg = "has been depreciated in favour of flake8 config files"
+    for setting_name in ['g:flake8_ignore', 'g:flake8_builtins', 'g:flake8_max_line_length', 'g:flake8_max_complexity']
+      if exists(setting_name)
+        echohl WarningMsg | echom setting_name l:msg | echohl None
+        let l:show_website_url = 1
+      endif
+    endfor
+
+    if l:show_website_url
+      let l:url = "http://flake8.readthedocs.org/en/latest/config.html"
+      echohl WarningMsg | echom l:url | echohl None
+    endif
+    let s:displayed_warnings = 1
+  endif
+endfunction
 
 "" config
 
@@ -46,11 +71,6 @@ function! s:Setup()  " {{{
 
     " flake8 command
     call s:DeclareOption('flake8_cmd', '', '"flake8"')
-    " flake8 stuff
-    call s:DeclareOption('flake8_builtins',        ' --builtins=',        '')
-    call s:DeclareOption('flake8_ignore',          ' --ignore=',          '')
-    call s:DeclareOption('flake8_max_line_length', ' --max-line-length=', '')
-    call s:DeclareOption('flake8_max_complexity',  ' --max-complexity=',  '')
     " quickfix
     call s:DeclareOption('flake8_quickfix_location', '', '"belowright"')
     call s:DeclareOption('flake8_quickfix_height',     '', 5)
@@ -117,7 +137,7 @@ function! s:Flake8()  " {{{
 
     " perform the grep itself
     let &grepformat="%f:%l:%c: %m\,%f:%l: %m"
-    let &grepprg=s:flake8_cmd.s:flake8_builtins.s:flake8_ignore.s:flake8_max_line_length.s:flake8_max_complexity
+    let &grepprg=s:flake8_cmd
     silent! grep! "%"
 
     " restore grep settings

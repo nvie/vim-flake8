@@ -5,17 +5,17 @@ a static syntax and style checker for Python source code.  It supersedes both
 [vim-pyflakes](https://github.com/nvie/vim-pyflakes) and
 [vim-pep8](https://github.com/nvie/vim-pep8).
 
-[Flake8](http://pypi.python.org/pypi/flake8/) is a wrapper around PyFlakes 
-(static syntax checker), PEP8 (style checker) 
-and Ned's MacCabe script (complexity checker).
+[Flake8](https://pypi.python.org/pypi/flake8/) is a wrapper around PyFlakes
+(static syntax checker), PEP8 (style checker) and Ned's MacCabe script
+(complexity checker).
 
 
 Installation
 ------------
 Use [vim-pathogen](https://github.com/tpope/vim-pathogen) if you're not using
-it already.  Make sure you've installed the [flake8](http://pypi.python.org/pypi/flake8/) package.
-Then, simply put the contents of this repository in your
-`~/.vim/bundle` directory.
+it already.  Make sure you've installed the
+[flake8](https://pypi.python.org/pypi/flake8/) package.  Then, simply put the
+contents of this repository in your `~/.vim/bundle` directory.
 
 Usage
 -----
@@ -39,21 +39,9 @@ the `<F7>` key if so.  For example, to remap it to `<F3>` instead, use:
 
     autocmd FileType python map <buffer> <F3> :call Flake8()<CR>
 
-To add builtins, in your .vimrc:
+For flake8 configuration options please consult the following page:
 
-    let g:flake8_builtins="_,apply"
-
-To ignore errors, in your .vimrc:
-
-    let g:flake8_ignore="E501,W293"
-
-If you want to change the max line length for PEP8:
-
-    let g:flake8_max_line_length=99
-
-To set the maximum [McCabe complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity) before a warning is issued:
-
-    let g:flake8_max_complexity=10
+https://flake8.readthedocs.org/en/latest/config.html
 
 To customize the location of your flake8 binary, set `g:flake8_cmd`:
 
@@ -110,21 +98,23 @@ Tips
 ----
 A tip might be to run the Flake8 check every time you write a Python file, to
 enable this, add the following line to your `.vimrc` file (thanks
-[Godefroid](http://github.com/gotcha)!):
+[Godefroid](https://github.com/gotcha)!):
 
     autocmd BufWritePost *.py call Flake8()
 
 This plugin goes well together with the following plugin:
 
-- [PyUnit](http://github.com/nvie/vim-pyunit) (unit test helper under `<F8>`
+- [PyUnit](https://github.com/nvie/vim-pyunit) (unit test helper under `<F8>`
   and `<F9>`)
 
 
 History
 -------
+1.6: Deprecated configuring flake8 options through Vim settings.  Instead,
+advise users to use the flake8 config file.
 
-1.5: Added markers and the option to don't show the quickfix window, also split functions into
-a autoload file. Added:
+1.5: Added markers and the option to don't show the quickfix window, also split
+functions into a autoload file. Added:
 
     - Options:
       - `g:flake8_show_quickfix`
