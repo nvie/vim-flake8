@@ -73,28 +73,28 @@ function! s:Setup()  " {{{
     call s:DeclareOption('flake8_cmd', '', '"flake8"')
     " quickfix
     call s:DeclareOption('flake8_quickfix_location', '', '"belowright"')
-    call s:DeclareOption('flake8_quickfix_height',     '', 5)
-    call s:DeclareOption('flake8_show_quickfix',     '', 1)
+    call s:DeclareOption('flake8_quickfix_height', '', 5)
+    call s:DeclareOption('flake8_show_quickfix', '', 1)
     " markers to show
     call s:DeclareOption('flake8_show_in_gutter', '',   0)
-    call s:DeclareOption('flake8_show_in_file',   '',   0)
-    call s:DeclareOption('flake8_max_markers',    '', 500)
+    call s:DeclareOption('flake8_show_in_file', '',   0)
+    call s:DeclareOption('flake8_max_markers', '', 500)
     " marker signs
-    call s:DeclareOption('flake8_error_marker',      '', '"E>"')
-    call s:DeclareOption('flake8_warning_marker',    '', '"W>"')
-    call s:DeclareOption('flake8_pyflake_marker',    '', '"F>"')
+    call s:DeclareOption('flake8_error_marker', '', '"E>"')
+    call s:DeclareOption('flake8_warning_marker', '', '"W>"')
+    call s:DeclareOption('flake8_pyflake_marker', '', '"F>"')
     call s:DeclareOption('flake8_complexity_marker', '', '"C>"')
-    call s:DeclareOption('flake8_naming_marker',     '', '"N>"')
+    call s:DeclareOption('flake8_naming_marker', '', '"N>"')
 
     "" setup markerdata
 
     if !exists('s:markerdata')
         let s:markerdata = {}
-        let s:markerdata['E'] = { 'name': 'Flake8_Error'      }
-        let s:markerdata['W'] = { 'name': 'Flake8_Warning'    }
-        let s:markerdata['F'] = { 'name': 'Flake8_PyFlake'    }
-        let s:markerdata['C'] = { 'name': 'Flake8_Complexity' }
-        let s:markerdata['N'] = { 'name': 'Flake8_Nameing'    }
+        let s:markerdata['E'] = {'name': 'Flake8_Error'}
+        let s:markerdata['W'] = {'name': 'Flake8_Warning'}
+        let s:markerdata['F'] = {'name': 'Flake8_PyFlake'}
+        let s:markerdata['C'] = {'name': 'Flake8_Complexity'}
+        let s:markerdata['N'] = {'name': 'Flake8_Nameing'}
     endif
     let s:markerdata['E'].marker = s:flake8_error_marker
     let s:markerdata['W'].marker = s:flake8_warning_marker
