@@ -111,7 +111,7 @@ This plugin goes well together with the following plugin:
 History
 -------
 1.6: Deprecated configuring flake8 options through Vim settings.  Instead,
-advise users to use the flake8 config file.
+advise users to use the `~/.config/flake8` config file.
 
     - Decprecated options:
       - `g:flake8_builtins`
