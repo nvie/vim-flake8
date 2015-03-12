@@ -31,7 +31,7 @@ function s:Warnings()
   if !s:displayed_warnings
     let l:show_website_url = 0
 
-    let l:msg = "has been depreciated in favour of flake8 config files"
+    let l:msg = "has been deprecated in favour of flake8 config files"
     for setting_name in ['g:flake8_ignore', 'g:flake8_builtins', 'g:flake8_max_line_length', 'g:flake8_max_complexity']
       if exists(setting_name)
         echohl WarningMsg | echom setting_name l:msg | echohl None
