@@ -75,7 +75,7 @@ function! s:Setup()  " {{{
     "" read options
 
     " flake8 command
-    call s:DeclareOption('flake8_cmd', '', '"/usr/bin/flake8"')
+    call s:DeclareOption('flake8_cmd', '', '"'.system('which flake8 | xargs echo -n').'"')
     " quickfix
     call s:DeclareOption('flake8_quickfix_location', '', '"belowright"')
     call s:DeclareOption('flake8_quickfix_height', '', 5)
