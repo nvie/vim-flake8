@@ -60,6 +60,11 @@ To customize whether the quickfix window opens, set `g:flake8_show_quickfix`:
     let g:flake8_show_quickfix=0  " don't show
     let g:flake8_show_quickfix=1  " show (default)
 
+To customize whether a warning bell is sounded on errors, set `g:flake8_bell`:
+
+    let g:flake8_bell=0  " no bell
+    let g:flake8_bell=1  " bell (default)
+
 To customize whether the show signs in the gutter, set `g:flake8_show_in_gutter`:
 
     let g:flake8_show_in_gutter=0  " don't show (default)
