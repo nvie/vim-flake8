@@ -234,13 +234,15 @@ function! s:UnplaceMarkers()  " {{{
         unlet s:signids
     endif
     " file markers
-    for l:val in values(s:markerdata)
-        if has_key(l:val, 'matchid')
-            call matchdelete(l:val.matchid)
-            unlet l:val.matchid
-            unlet l:val.matchstr
-        endif
-    endfor
+    if exists('s:markerdata')
+        for l:val in values(s:markerdata)
+            if has_key(l:val, 'matchid')
+                call matchdelete(l:val.matchid)
+                unlet l:val.matchid
+                unlet l:val.matchstr
+            endif
+        endfor
+    endif
 endfunction  " }}}
 
 "" }}}
