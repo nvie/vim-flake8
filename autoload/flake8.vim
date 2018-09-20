@@ -132,7 +132,6 @@ function! s:Flake8()  " {{{
     endif
 
     set lazyredraw   " delay redrawing
-    cclose           " close any existing cwindows
 
     " set shellpipe to > instead of tee (suppressing output)
     set shellpipe=>
@@ -141,6 +140,9 @@ function! s:Flake8()  " {{{
     let &grepformat="%f:%l:%c: %m\,%f:%l: %m"
     let &grepprg=s:flake8_cmd
     silent! grep! "%"
+    " close any existing cwindows,
+    " placed after 'grep' in case quickfix is open on autocmd QuickFixCmdPost
+    cclose
 
     " restore grep settings
     let &grepformat=l:old_gfm
