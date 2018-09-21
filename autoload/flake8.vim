@@ -125,6 +125,8 @@ function! s:Flake8()  " {{{
     let l:old_gfm=&grepformat
     let l:old_gp=&grepprg
     let l:old_shellpipe=&shellpipe
+    let l:old_t_ti=&t_ti
+    let l:old_t_te=&t_te
 
     " write any changes before continuing
     if &readonly == 0
@@ -133,8 +135,10 @@ function! s:Flake8()  " {{{
 
     set lazyredraw   " delay redrawing
 
-    " set shellpipe to > instead of tee (suppressing output)
+    " prevent terminal from blinking
     set shellpipe=>
+    set t_ti=
+    set t_te=
 
     " perform the grep itself
     let &grepformat="%f:%l:%c: %m\,%f:%l: %m"
@@ -148,6 +152,8 @@ function! s:Flake8()  " {{{
     let &grepformat=l:old_gfm
     let &grepprg=l:old_gp
     let &shellpipe=l:old_shellpipe
+    let &t_ti=l:old_t_ti
+    let &t_te=l:old_t_te
 
     " process results
     let l:results=getqflist()
