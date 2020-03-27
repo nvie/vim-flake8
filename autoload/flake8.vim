@@ -31,7 +31,7 @@ endfunction
 "" warnings 
 
 let s:displayed_warnings = 0
-function! s:Warnings()
+function s:Warnings()
   if !s:displayed_warnings
     let l:show_website_url = 0
 
@@ -170,7 +170,7 @@ function! s:Flake8()  " {{{
     let l:has_results=results != []
     if l:has_results
 	" save line number of each error message	
-        for result in a:results:
+        for result in l:results:
             s:resultDict[result.lnum] = result.text
 
         " markers
