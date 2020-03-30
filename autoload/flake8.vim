@@ -20,7 +20,7 @@ function! flake8#Flake8UnplaceMarkers()
     call s:Warnings()
 endfunction
 
-function! flake8#ShowErrorMessage()
+function! flake8#Flake8ShowError()
     call s:ShowErrorMessage()
 endfunction
 
@@ -106,8 +106,6 @@ function! s:Setup()  " {{{
     let s:markerdata['C'].marker = s:flake8_complexity_marker
     let s:markerdata['N'].marker = s:flake8_naming_marker
 
-
-
 endfunction  " }}}
 
 "" do flake8
@@ -170,8 +168,10 @@ function! s:Flake8()  " {{{
     let l:has_results=results != []
     if l:has_results
 	" save line number of each error message	
-        for result in l:results:
-            s:resultDict[result.lnum] = result.text
+        for result in l:results
+	    let linenum = result.lnum
+            let s:resultDict[linenum] = result.text
+	endfor
 
         " markers
         if !s:flake8_show_in_gutter == 0 || !s:flake8_show_in_file == 0
@@ -196,6 +196,12 @@ function! s:Flake8()  " {{{
     else
         echon "Flake8 found issues"
     endif
+endfunction  " }}}
+
+
+function! s:MakeMap(results)  " {{{
+    for result in a:results
+    endfor
 endfunction  " }}}
 
 "" markers
@@ -274,8 +280,8 @@ function! s:ShowErrorMessage()  " {{{
 
     " if there is a message on the current line,
     " then echo it 
-    if has_key(s:matchDict, s:cursorPos[1])
-	let l:errorText = get(s:matchDict, l:cursorPos[1]) 
+    if has_key(s:resultDict, l:cursorPos[1])
+	let l:errorText = get(s:resultDict, l:cursorPos[1]) 
 	echo strpart(l:errorText, 0, &columns-1)
 	let b:showing_message = 1
     endif
