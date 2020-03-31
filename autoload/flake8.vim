@@ -28,6 +28,10 @@ function! flake8#Flake8NextError()
     call s:JumpNextError()
 endfunction
 
+function! flake8#Flake8PrevError()
+    call s:JumpPrevError()
+endfunction
+
 "" }}}
 
 "" ** internal ** {{{
@@ -276,23 +280,6 @@ function! s:UnplaceMarkers()  " {{{
     endfor
 endfunction  " }}}
 
-function! s:JumpNextError()  " {{{
-    let l:cursorLine = getpos(".")[1]
-    if !exists('s:resultDict')
-	return
-    endif
-
-    let l:lineList = keys(s:resultDict)
-
-    for line in lineList
-        if line	> l:cursorLine
-	    call cursor(line)
-	    call s:ShowErrorMessage()
-	endif
-    endfor
-
-endfunction  " }}}
-
 function! s:ShowErrorMessage()  " {{{
     let l:cursorPos = getpos(".")
     if !exists('s:resultDict')
@@ -313,6 +300,57 @@ function! s:ShowErrorMessage()  " {{{
 	echo
 	let b:showing_message = 0
     endif
+endfunction  " }}}
+
+function! s:JumpNextError()  " {{{
+    let l:cursorLine = getpos(".")[1]
+    if !exists('s:resultDict')
+	return
+    endif
+
+    " Convert list of strings to ints
+    let l:lineList = []
+    for line in keys(s:resultDict)
+	call insert(l:lineList, line+0)
+    endfor
+
+    let l:sortedLineList = sort(l:lineList, 'n')
+    for line in l:sortedLineList
+	let l:line_int = line + 0
+        if line	> l:cursorLine
+	    call cursor(line, 1)
+	    call s:ShowErrorMessage()
+	    return
+	endif
+    endfor
+    call cursor(l:cursorLine, 1)
+    echo "Reached last error!"
+
+endfunction  " }}}
+
+function! s:JumpPrevError()  " {{{
+    let l:cursorLine = getpos(".")[1]
+    if !exists('s:resultDict')
+	return
+    endif
+
+    " Convert list of strings to ints
+    let l:lineList = []
+    for line in keys(s:resultDict)
+	call insert(l:lineList, line+0)
+    endfor
+
+    let l:sortedLineList = reverse(sort(l:lineList, 'n'))
+    for line in l:sortedLineList
+	let l:line_int = line + 0
+        if line	< l:cursorLine
+	    call cursor(line, 1)
+	    call s:ShowErrorMessage()
+	    return
+	endif
+    endfor
+    call cursor(l:cursorLine, 1)
+    echo "Reached first error!"
 
 endfunction  " }}}
 
