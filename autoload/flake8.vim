@@ -24,6 +24,10 @@ function! flake8#Flake8ShowError()
     call s:ShowErrorMessage()
 endfunction
 
+function! flake8#Flake8NextError()
+    call s:JumpNextError()
+endfunction
+
 "" }}}
 
 "" ** internal ** {{{
@@ -270,6 +274,23 @@ function! s:UnplaceMarkers()  " {{{
             unlet l:val.matchstr
         endif
     endfor
+endfunction  " }}}
+
+function! s:JumpNextError()  " {{{
+    let l:cursorLine = getpos(".")[1]
+    if !exists('s:resultDict')
+	return
+    endif
+
+    let l:lineList = keys(s:resultDict)
+
+    for line in lineList
+        if line	> l:cursorLine
+	    call cursor(line)
+	    call s:ShowErrorMessage()
+	endif
+    endfor
+
 endfunction  " }}}
 
 function! s:ShowErrorMessage()  " {{{
