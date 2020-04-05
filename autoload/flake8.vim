@@ -207,11 +207,6 @@ function! s:Flake8()  " {{{
 endfunction  " }}}
 
 
-function! s:MakeMap(results)  " {{{
-    for result in a:results
-    endfor
-endfunction  " }}}
-
 "" markers
 function! s:PlaceMarkers(results)  " {{{
     " in gutter?
