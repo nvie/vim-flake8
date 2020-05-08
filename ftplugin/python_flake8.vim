@@ -48,6 +48,9 @@ if !exists("no_plugin_maps") && !exists("no_flake8_maps")
     if !hasmapto('Flake8(') && !hasmapto('flake8#Flake8(')
         noremap <buffer> <F7> :call flake8#Flake8()<CR>
     endif
+    if !hasmapto('Flake3(') && !hasmapto('flake8#Flake3(')
+        noremap <buffer> <F8> :call flake8#Flake3()<CR>
+    endif
 endif
 
 let &cpo = s:save_cpo

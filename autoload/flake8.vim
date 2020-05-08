@@ -10,8 +10,13 @@ set cpo&vim
 
 "" ** external ** {{{
 
+function! flake8#Flake3()
+    call s:Flake8("python3")
+    call s:Warnings()
+endfunction
+
 function! flake8#Flake8()
-    call s:Flake8()
+    call s:Flake8("python2")
     call s:Warnings()
 endfunction
 
@@ -74,7 +79,7 @@ function! s:Setup()  " {{{
     "" read options
 
     " flake8 command
-    call s:DeclareOption('flake8_cmd', '', '"flake8"')
+    call s:DeclareOption('flake8_cmd', '', '"'.system('which flake8 | xargs echo -n').'"')
     " quickfix
     call s:DeclareOption('flake8_quickfix_location', '', '"belowright"')
     call s:DeclareOption('flake8_quickfix_height', '', 5)
@@ -110,7 +115,7 @@ endfunction  " }}}
 
 "" do flake8
 
-function! s:Flake8()  " {{{
+function! s:Flake8(pyversion)  " {{{
     " read config
     call s:Setup()
 
@@ -147,7 +152,7 @@ function! s:Flake8()  " {{{
 
     " perform the grep itself
     let &grepformat="%f:%l:%c: %m\,%f:%l: %m"
-    let &grepprg=s:flake8_cmd
+    let &grepprg=a:pyversion.' '.s:flake8_cmd
     silent! grep! "%"
     " close any existing cwindows,
     " placed after 'grep' in case quickfix is open on autocmd QuickFixCmdPost
