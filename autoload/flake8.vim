@@ -28,7 +28,7 @@ endfunction
 
 "" ** internal ** {{{
 
-"" warnings 
+"" warnings
 
 let s:displayed_warnings = 0
 function s:Warnings()
@@ -89,6 +89,8 @@ function! s:Setup()  " {{{
     call s:DeclareOption('flake8_pyflake_marker', '', '"F>"')
     call s:DeclareOption('flake8_complexity_marker', '', '"C>"')
     call s:DeclareOption('flake8_naming_marker', '', '"N>"')
+    " user identified flake8 config file
+    call s:DeclareOption('flake8_config_file', '', '')
 
     "" setup markerdata
 
@@ -147,7 +149,18 @@ function! s:Flake8()  " {{{
 
     " perform the grep itself
     let &grepformat="%f:%l:%c: %m\,%f:%l: %m"
-    let &grepprg=s:flake8_cmd
+
+    if s:flake8_config_file != ''
+        if filereadable(s:flake8_config_file)
+            let &grepprg=s:flake8_cmd . ' --config=' . s:flake8_config_file
+        else
+            echoerr "flake8 config file " . s:flake8_config_file . " not found"
+            return
+        endif
+    else
+        let &grepprg=s:flake8_cmd
+    endif
+
     silent! grep! "%"
     " close any existing cwindows,
     " placed after 'grep' in case quickfix is open on autocmd QuickFixCmdPost
