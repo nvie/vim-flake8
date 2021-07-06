@@ -145,7 +145,6 @@ advise users to use the `~/.config/flake8` config file.
 
     - Decprecated options:
       - `g:flake8_builtins`
-      - `g:flake8_ignore`
       - `g:flake8_max_line_length`
       - `g:flake8_max_complexity`
 

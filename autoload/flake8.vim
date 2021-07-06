@@ -36,7 +36,7 @@ function s:Warnings()
     let l:show_website_url = 0
 
     let l:msg = "has been deprecated in favour of flake8 config files"
-    for setting_name in ['g:flake8_ignore', 'g:flake8_builtins', 'g:flake8_max_line_length', 'g:flake8_max_complexity']
+    for setting_name in ['g:flake8_builtins', 'g:flake8_max_line_length', 'g:flake8_max_complexity']
       if exists(setting_name)
         echohl WarningMsg | echom setting_name l:msg | echohl None
         let l:show_website_url = 1
@@ -75,6 +75,8 @@ function! s:Setup()  " {{{
 
     " flake8 command
     call s:DeclareOption('flake8_cmd', '', '"flake8"')
+    " ignore
+    call s:DeclareOption('flake8_ignore', ' --ignore=', '')
     " quickfix
     call s:DeclareOption('flake8_quickfix_location', '', '"belowright"')
     call s:DeclareOption('flake8_quickfix_height', '', 5)
@@ -147,7 +149,7 @@ function! s:Flake8()  " {{{
 
     " perform the grep itself
     let &grepformat="%f:%l:%c: %m\,%f:%l: %m"
-    let &grepprg=s:flake8_cmd
+    let &grepprg=s:flake8_cmd.s:flake8_ignore
     silent! grep! "%"
     " close any existing cwindows,
     " placed after 'grep' in case quickfix is open on autocmd QuickFixCmdPost
