@@ -70,6 +70,12 @@ To customize whether the quickfix window opens, set `g:flake8_show_quickfix`:
     let g:flake8_show_quickfix=0  " don't show
     let g:flake8_show_quickfix=1  " show (default)
 
+To customize wheather the quickfix window stays open even when no errors are found, set
+`g:flake8_always_visible`:
+
+    let g:flake8_always_visible=0   " don't show quickfix window if no errors (default)
+    let g:flake8_always_visible=1   " show quickfix window even if no errors
+
 To customize whether the show signs in the gutter, set `g:flake8_show_in_gutter`:
 
     let g:flake8_show_in_gutter=0  " don't show (default)
@@ -109,6 +115,14 @@ To show the error message of the current line in the ruler, call `flake8#ShowErr
     " add binding to call the function
     nnoremap <C-K> :call flake8#Flake8ShowError()<cr>
     
+To disable the auto-save option (vim `update`) while running `:flake8#Flake8()` use the
+`g:flake8_auto_update` option. This can be disabled to prevent auto-saving a file if the
+Flake8 command is run as part of an `autocmd` for instance. This will prevent overwritting
+of the file. Note however, that flake8 will be run on the existing file on the file system,
+and not the current buffer when this option is disabled:
+
+    let g:flake8_auto_update=0  " Disable auto-save when running Flake8
+    let g:flake8_auto_update=1  " Enable auto-save when running Flake8 (default)
 
 Tips
 ----
