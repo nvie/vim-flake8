@@ -79,7 +79,7 @@ function! s:Setup()  " {{{
     call s:DeclareOption('flake8_quickfix_location', '', '"belowright"')
     call s:DeclareOption('flake8_quickfix_height', '', 5)
     call s:DeclareOption('flake8_show_quickfix', '', 1)
-	call s:DeclareOption('flake8_always_visible', '', 0)
+    call s:DeclareOption('flake8_always_visible', '', 0)
     " markers to show
     call s:DeclareOption('flake8_show_in_gutter', '',   0)
     call s:DeclareOption('flake8_show_in_file', '',   0)
@@ -90,8 +90,8 @@ function! s:Setup()  " {{{
     call s:DeclareOption('flake8_pyflake_marker', '', '"F>"')
     call s:DeclareOption('flake8_complexity_marker', '', '"C>"')
     call s:DeclareOption('flake8_naming_marker', '', '"N>"')
-	" other configuration options
-	call s:DeclareOption('flake8_auto_update', '', 1)
+    " other configuration options
+    call s:DeclareOption('flake8_auto_update', '', 1)
 
     "" setup markerdata
 
@@ -170,28 +170,28 @@ function! s:Flake8()  " {{{
     let l:results=getqflist()
     let l:has_results=results != []
 	if l:has_results || s:flake8_always_visible
-		" save line number of each error message
-		for result in l:results
-			let linenum = result.lnum
-			let s:resultDict[linenum] = result.text
-		endfor
+	" save line number of each error message	
+        for result in l:results
+	        let linenum = result.lnum
+            let s:resultDict[linenum] = result.text
+	    endfor
 
-		" markers
-		if !s:flake8_show_in_gutter == 0 || !s:flake8_show_in_file == 0
-			call s:PlaceMarkers(l:results)
-		endif
-		" quickfix
-		if !s:flake8_show_quickfix == 0
-			" open cwindow
-			execute s:flake8_quickfix_location." copen".s:flake8_quickfix_height
-			setlocal wrap
-			nnoremap <buffer> <silent> c :cclose<CR>
-			nnoremap <buffer> <silent> q :cclose<CR>
-		endif
-	endif
+        " markers
+        if !s:flake8_show_in_gutter == 0 || !s:flake8_show_in_file == 0
+            call s:PlaceMarkers(l:results)
+        endif
+        " quickfix
+        if !s:flake8_show_quickfix == 0
+            " open cwindow
+            execute s:flake8_quickfix_location." copen".s:flake8_quickfix_height
+            setlocal wrap
+            nnoremap <buffer> <silent> c :cclose<CR>
+            nnoremap <buffer> <silent> q :cclose<CR>
+        endif
+    endif
 
-	set nolazyredraw
-	redraw!
+    set nolazyredraw
+    redraw!
 
     " Show status
     if l:has_results == 0
