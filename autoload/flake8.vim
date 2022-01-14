@@ -169,7 +169,7 @@ function! s:Flake8()  " {{{
 
     let l:results=getqflist()
     let l:has_results=results != []
-	if l:has_results || s:flake8_always_visible
+    if l:has_results || s:flake8_always_visible
 	" save line number of each error message	
         for result in l:results
 	        let linenum = result.lnum
