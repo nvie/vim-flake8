@@ -132,7 +132,7 @@ maximum line length default.  This is a config setting that should be set in
 flake8 itself. (vim-flake8 "just" invokes it and deals with showing the output
 in Vim's quickfix window.)
 
-To do so, put the following into your `~/.config/flake8` file:
+To do so, put the following into a `.flake8` file at the root of your project:
 
     [flake8]
     max-line-length = 120
