@@ -88,11 +88,11 @@ To customize the gutter markers, set any of `flake8_error_marker`, `flake8_warni
 `flake8_pyflake_marker`, `flake8_complexity_marker`, `flake8_naming_marker`. Setting one to
 the empty string disables it. Ex.:
 
-    flake8_error_marker='EE'     " set error marker to 'EE'
-    flake8_warning_marker='WW'   " set warning marker to 'WW'
-    flake8_pyflake_marker=''     " disable PyFlakes warnings
-    flake8_complexity_marker=''  " disable McCabe complexity warnings
-    flake8_naming_marker=''      " disable naming warnings
+    let g:flake8_error_marker='EE'     " set error marker to 'EE'
+    let g:flake8_warning_marker='WW'   " set warning marker to 'WW'
+    let g:flake8_pyflake_marker=''     " disable PyFlakes warnings
+    let g:flake8_complexity_marker=''  " disable McCabe complexity warnings
+    let g:flake8_naming_marker=''      " disable naming warnings
 
 To customize the colors used for markers, define the highlight groups, `Flake8_Error`,
 `Flake8_Warning`, `Flake8_PyFlake`, `Flake8_Complexity`, `Flake8_Naming`:
