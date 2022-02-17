@@ -141,7 +141,7 @@ To do so, put the following into a `.flake8` file at the root of your project:
 History
 -------
 1.6: Deprecated configuring flake8 options through Vim settings.  Instead,
-advise users to use the `~/.config/flake8` config file.
+advise users to use a `.flake8` config file in the root of your project.
 
     - Decprecated options:
       - `g:flake8_builtins`
