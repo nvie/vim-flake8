@@ -87,6 +87,7 @@ function! s:Setup()  " {{{
     call s:DeclareOption('flake8_quickfix_location', '', '"belowright"')
     call s:DeclareOption('flake8_quickfix_height', '', 5)
     call s:DeclareOption('flake8_show_quickfix', '', 1)
+    call s:DeclareOption('flake8_bell', '', 1)
     " markers to show
     call s:DeclareOption('flake8_show_in_gutter', '',   0)
     call s:DeclareOption('flake8_show_in_file', '',   0)
@@ -192,6 +193,10 @@ function! s:Flake8()  " {{{
             setlocal wrap
             nnoremap <buffer> <silent> c :cclose<CR>
             nnoremap <buffer> <silent> q :cclose<CR>
+        endif
+        " bell
+        if !s:flake8_bell == 0
+            normal "\<Esc>"
         endif
     endif
 
